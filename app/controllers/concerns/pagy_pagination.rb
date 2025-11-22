@@ -1,20 +1,28 @@
 module PagyPagination
   extend ActiveSupport::Concern
+  include Pagy::Backend
 
-  included do
-    include Pagy::Backend
-  end
+  def paginate(query, per_page, serializer: nil)
+    pagy, records = pagy(query, items: (per_page || 10))
 
-  def paginate(query, per_page)
-    pagy, paged = pagy(query, items: per_page)
+    items =
+      if serializer
+        ActiveModelSerializers::SerializableResource.new(
+          records,
+          each_serializer: serializer
+        )
+      else
+        records
+      end
+
     {
       pagy: {
         current_page: pagy.page,
         total_pages:  pagy.pages,
         total_count:  pagy.count,
-        per_page:     pagy.items   # << CORREÇÃO AQUI
+        per_page:     pagy.items
       },
-      items: paged
+      items: items
     }
   end
 end
