@@ -10,5 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 0) do
+ActiveRecord::Schema[7.2].define(version: 2025_11_22_015333) do
+  create_table "users", force: :cascade do |t|
+    t.string "nome", null: false
+    t.string "cpf", null: false
+    t.string "email", null: false
+    t.string "password_digest", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["cpf"], name: "index_users_on_cpf", unique: true
+    t.index ["email"], name: "index_users_on_email", unique: true
+  end
 end
