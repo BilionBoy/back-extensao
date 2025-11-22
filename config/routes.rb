@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+ root to: "rails/health#show"
+
+  # opcional: manter a rota /up
   get "up" => "rails/health#show", as: :rails_health_check
 
   # Auth
