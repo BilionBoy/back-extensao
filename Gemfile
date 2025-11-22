@@ -2,8 +2,6 @@ source "https://rubygems.org"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 7.2.2", ">= 7.2.2.1"
-# Use sqlite3 as the database for Active Record
-gem "sqlite3", ">= 1.4"
 # Use the Puma web server [https://github.com/puma/puma]
 gem "puma", ">= 5.0"
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
@@ -40,6 +38,7 @@ group :development, :test do
   gem "rubocop-rails-omakase", require: false
 end
 
+  gem "dotenv-rails", groups: [ :development, :test ]
 
 
   # Gem para Postgres
