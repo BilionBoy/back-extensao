@@ -1,7 +1,10 @@
 Rails.application.routes.draw do
+  # Health check
   get "/health", to: proc { [ 200, {}, [ "OK" ] ] }
 
-  # rotas existentes
-  post "/register", to: "auth#register"
-  post "/login", to: "auth#login"
+  # Namespace de autenticação
+  scope "/auth" do
+    post "/register", to: "auth#register"
+    post "/login",    to: "auth#login"
+  end
 end
