@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::API
   before_action :authenticate_request!
-
+  include Pagy::Backend
   # NÃO deixa esse método como private
   def authenticate_request!
     header = request.headers["Authorization"]
