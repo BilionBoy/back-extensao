@@ -1,19 +1,30 @@
 class ApplicationController < ActionController::API
-  include JsonResponse
+  before_action :authenticate_request!
 
-  before_action :authenticate_request
+  # NÃO deixa esse método como private
+  def authenticate_request!
+    header = request.headers["Authorization"]
+    token  = header&.split&.last
+
+    decoded = decode_token(token)
+    return render json: { error: "Não autorizado" }, status: :unauthorized unless decoded
+
+    @current_user = User.find_by(id: decoded["user_id"])
+  end
 
   private
 
-  def authenticate_request
-    header = request.headers["Authorization"]
-    token = header&.split&.last
+  def jwt_secret
+    Rails.application.secret_key_base
+  end
 
-    begin
-      decoded = JWT.decode(token, Rails.application.secret_key_base)[0]
-      @current_user = User.find(decoded["user_id"])
-    rescue
-      render_error(message: "Não autorizado", status: :unauthorized)
-    end
+  def encode_token(payload)
+    JWT.encode(payload.merge(exp: 24.hours.from_now.to_i), jwt_secret)
+  end
+
+  def decode_token(token)
+    JWT.decode(token, jwt_secret, true, algorithm: "HS256")[0]
+  rescue
+    nil
   end
 end
