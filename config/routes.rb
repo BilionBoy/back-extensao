@@ -8,7 +8,9 @@ Rails.application.routes.draw do
       resources :g_status_pagamentos
       resources :g_clientes
       resources :g_itens
+      resources :g_contratos
       post "/login", to: "auth#login"
+      get "/dashboard", to: "dashboard#index"
     end
   end
 end

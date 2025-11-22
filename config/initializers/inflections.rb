@@ -5,4 +5,6 @@ ActiveSupport::Inflector.inflections(:en) do |inflect|
   inflect.irregular "g_status_pagamento",  "g_status_pagamentos"
   inflect.irregular "g_cliente",           "g_clientes"
   inflect.irregular "g_item",              "g_itens"
+  inflect.irregular "g_contrato",          "g_contratos"
+  inflect.irregular "g_contrato_item",     "g_contrato_itens"
 end

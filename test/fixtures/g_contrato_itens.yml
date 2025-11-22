@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  g_contrato: one
+  g_item: one
+  quantidade: 1
+
+two:
+  g_contrato: two
+  g_item: two
+  quantidade: 1

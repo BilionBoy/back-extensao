@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_11_22_034352) do
+ActiveRecord::Schema[7.2].define(version: 2025_11_22_035817) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -33,6 +33,30 @@ ActiveRecord::Schema[7.2].define(version: 2025_11_22_034352) do
     t.datetime "updated_at", null: false
     t.index ["cpf"], name: "index_g_clientes_on_cpf", unique: true
     t.index ["g_bairro_id"], name: "index_g_clientes_on_g_bairro_id"
+  end
+
+  create_table "g_contratos", force: :cascade do |t|
+    t.date "data_entrega"
+    t.date "data_devolucao"
+    t.text "observacoes"
+    t.bigint "g_cliente_id", null: false
+    t.bigint "g_status_pagamento_id", null: false
+    t.bigint "g_forma_pagamento_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["g_cliente_id"], name: "index_g_contratos_on_g_cliente_id"
+    t.index ["g_forma_pagamento_id"], name: "index_g_contratos_on_g_forma_pagamento_id"
+    t.index ["g_status_pagamento_id"], name: "index_g_contratos_on_g_status_pagamento_id"
+  end
+
+  create_table "g_contratos_itens", force: :cascade do |t|
+    t.bigint "g_contrato_id"
+    t.bigint "g_item_id"
+    t.integer "quantidade"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["g_contrato_id"], name: "index_g_contratos_itens_on_g_contrato_id"
+    t.index ["g_item_id"], name: "index_g_contratos_itens_on_g_item_id"
   end
 
   create_table "g_formas_pagamento", force: :cascade do |t|
@@ -69,4 +93,9 @@ ActiveRecord::Schema[7.2].define(version: 2025_11_22_034352) do
   end
 
   add_foreign_key "g_clientes", "g_bairros"
+  add_foreign_key "g_contratos", "g_clientes"
+  add_foreign_key "g_contratos", "g_formas_pagamento"
+  add_foreign_key "g_contratos", "g_status_pagamentos"
+  add_foreign_key "g_contratos_itens", "g_contratos"
+  add_foreign_key "g_contratos_itens", "g_itens"
 end
