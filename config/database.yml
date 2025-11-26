@@ -9,21 +9,21 @@ development:
   database: back_extensao_development
   username: postgres
   password: postgres
-  host: localhost
-  port: 5432
+  host: <%= ENV.fetch("DB_HOST", "localhost") %>
+  port: <%= ENV.fetch("DB_PORT", 5432) %>
 
 test:
   <<: *default
   database: back_extensao_test
   username: postgres
   password: postgres
-  host: localhost
-  port: 5432
+  host: <%= ENV.fetch("DB_HOST", "localhost") %>
+  port: <%= ENV.fetch("DB_PORT", 5432) %>
 
 production:
   <<: *default
   database: back_extensao_production
-  username: <%= ENV["DB_USERNAME"] || "postgres" %>
-  password: <%= ENV["DB_PASSWORD"] || "postgres" %>
-  host: <%= ENV["DB_HOST"] || "localhost" %>
-  port: <%= ENV["DB_PORT"] || 5432 %>
+  username: <%= ENV["DB_USERNAME"] %>
+  password: <%= ENV["DB_PASSWORD"] %>
+  host: <%= ENV["DB_HOST"] %>
+  port: <%= ENV.fetch("DB_PORT", 5432) %>
