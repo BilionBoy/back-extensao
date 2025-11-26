@@ -2,19 +2,28 @@ default: &default
   adapter: postgresql
   encoding: unicode
   pool: 5
-  host: <%= ENV["DB_HOST"] %>
-  port: <%= ENV["DB_PORT"] %>
-  username: <%= ENV["DB_USER"] %>
-  password: <%= ENV["DB_PASSWORD"] %>
+  timeout: 5000
 
 development:
   <<: *default
-  database: <%= ENV["DB_NAME"] %>
+  database: back_extensao_development
+  username: postgres
+  password: postgres
+  host: localhost
+  port: 5432
 
 test:
   <<: *default
-  database: locacao_api_test
+  database: back_extensao_test
+  username: postgres
+  password: postgres
+  host: localhost
+  port: 5432
 
 production:
   <<: *default
-  database: <%= ENV["DB_NAME"] %>
+  database: back_extensao_production
+  username: <%= ENV["DB_USERNAME"] || "postgres" %>
+  password: <%= ENV["DB_PASSWORD"] || "postgres" %>
+  host: <%= ENV["DB_HOST"] || "localhost" %>
+  port: <%= ENV["DB_PORT"] || 5432 %>

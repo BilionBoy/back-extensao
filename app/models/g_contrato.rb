@@ -13,4 +13,11 @@ class GContrato < ApplicationRecord
   has_many :g_itens, through: :g_contrato_itens
 
   accepts_nested_attributes_for :g_contrato_itens, allow_destroy: true
+
+  # ✅ NOVO
+  def valor_total
+    g_contrato_itens.includes(:g_item).sum do |item|
+      item.quantidade.to_i * item.g_item.valor_diaria.to_f
+    end
+  end
 end
